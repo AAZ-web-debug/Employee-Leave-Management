@@ -1,0 +1,102 @@
+@import "tailwindcss";
+
+:root {
+  --bg: #111315;
+  --surface: #181a1f;
+  --card: #20232a;
+  --border: #2b3038;
+
+  --text: #f5f7fa;
+  --muted: #9ca3af;
+
+  --accent: #7c8cf8;
+  --success: #22c55e;
+  --warning: #f59e0b;
+  --danger: #ef4444;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+}
+@keyframes borderBeam {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(calc(100vw));
+  }
+}
+
+@keyframes rotateBorderBeam {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animated-border-wrapper {
+  padding: 1px;
+}
+
+.animated-border-beam {
+  position: absolute;
+
+  width: 220px;
+  height: 220px;
+
+  top: 50%;
+  left: 50%;
+
+  transform-origin: center center;
+
+  background: conic-gradient(
+    transparent 0deg,
+    transparent 330deg,
+    rgba(255,255,255,0.95) 350deg,
+    white 360deg
+  );
+
+  animation: rotateBorderBeam 6s linear infinite;
+
+  translate: -50% -50%;
+}
+
+@keyframes borderBeamRotate {
+  from {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+.dashboard-beam {
+  position: absolute;
+
+  width: 350px;
+  height: 350px;
+
+  top: 50%;
+  left: 50%;
+
+  background: conic-gradient(
+    transparent 0deg,
+    transparent 340deg,
+    rgba(255,255,255,0.9) 355deg,
+    white 360deg
+  );
+
+  animation: borderBeamRotate 8s linear infinite;
+}
