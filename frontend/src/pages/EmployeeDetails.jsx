@@ -425,6 +425,10 @@ const usedLeaves =
                     </th>
 
                     <th className="text-left py-4">
+                      Attachment
+                    </th>
+
+                    <th className="text-left py-4">
                       Manager Remarks
                     </th>
                   </tr>
@@ -507,6 +511,34 @@ const usedLeaves =
                             }
                           </span>
                         </td>
+
+                        <td className="py-4">
+  {leave.attachment ? (
+    <a
+      href={`http://localhost:5000/${leave.attachment}`}
+      target="_blank"
+      rel="noreferrer"
+      className="
+        inline-flex
+        items-center
+        px-3 py-1.5
+        rounded-lg
+        bg-blue-500/10
+        border border-blue-500/20
+        text-blue-400
+        text-xs
+        hover:bg-blue-500/20
+        transition
+      "
+    >
+      📄 View File
+    </a>
+  ) : (
+    <span className="text-zinc-600 text-xs">
+      —
+    </span>
+  )}
+</td>
 
                         <td className="py-4">
                         <div

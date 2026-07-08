@@ -33,6 +33,8 @@ const StatItem = ({
 const ManagerDashboard = () => {
   const [stats, setStats] = useState(null);
   const [leaves, setLeaves] = useState([]);
+  const [statusFilter, setStatusFilter] =
+  useState("all");
 
   useEffect(() => {
     fetchDashboard();
@@ -123,6 +125,13 @@ const [selectedReason, setSelectedReason] =
   }
 };
 
+const filteredLeaves =
+  statusFilter === "all"
+    ? leaves
+    : leaves.filter(
+        (leave) =>
+          leave.status === statusFilter
+      );
 
   return (
     <DashboardLayout>
@@ -220,10 +229,40 @@ const [selectedReason, setSelectedReason] =
 
               {/* Table Section */}
               <div className="mb-6">
-                <h2 className="text-xl font-semibold text-white">
-                  Recent Leave Requests
-                </h2>
-              </div>
+  <h2 className="text-xl font-semibold text-white">
+    Recent Leave Requests
+  </h2>
+
+  <div className="flex gap-3 mt-4">
+    {[
+      "all",
+      "pending",
+      "approved",
+      "rejected",
+    ].map((status) => (
+      <button
+        key={status}
+        onClick={() =>
+          setStatusFilter(status)
+        }
+        className={`
+          px-4 py-2
+          rounded-xl
+          text-sm
+          transition-all
+          ${
+            statusFilter === status
+              ? "bg-blue-500/20 border border-blue-500/30 text-blue-400"
+              : "bg-white/5 border border-white/10 text-zinc-400"
+          }
+        `}
+      >
+        {status.charAt(0).toUpperCase() +
+          status.slice(1)}
+      </button>
+    ))}
+  </div>
+</div>
 
               <div className="overflow-x-auto">
                 <table className="w-full border-collapse">
@@ -259,7 +298,7 @@ const [selectedReason, setSelectedReason] =
                   </thead>
 
                   <tbody className="text-sm">
-                    {leaves.length === 0 ? (
+                    {filteredLeaves.length === 0 ? (
                       <tr>
                         <td
                           colSpan="5"
@@ -269,7 +308,7 @@ const [selectedReason, setSelectedReason] =
                         </td>
                       </tr>
                     ) : (
-                      leaves.map((leave) => (
+                      filteredLeaves.map((leave) => (
                         <tr
                           key={leave._id}
                           className="border-b border-white/[0.04] hover:bg-white/[0.02] transition-colors group"
