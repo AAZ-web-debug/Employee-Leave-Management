@@ -19,6 +19,17 @@ const EmployeeDetails = () => {
   const [loading, setLoading] =
     useState(true);
 
+  const [department, setDepartment] =
+  useState("");
+
+  const [saved, setSaved] = useState(false);
+
+const [designation, setDesignation] =
+  useState("");
+
+const [saving, setSaving] =
+  useState(false);
+
   useEffect(() => {
     fetchEmployee();
   }, []);
@@ -38,6 +49,17 @@ const EmployeeDetails = () => {
         setLeaves(
           response.data.data.leaves
         );
+
+        setDepartment(
+  response.data.data.employee
+    .department || ""
+);
+
+setDesignation(
+  response.data.data.employee
+    .designation || ""
+);
+
         console.log(
   response.data.data.leaves
 );
@@ -47,6 +69,32 @@ const EmployeeDetails = () => {
         setLoading(false);
       }
     };
+
+    const updateJobDetails =
+  async () => {
+    try {
+      setSaving(true);
+
+      await api.patch(
+        `/employees/${id}/job-details`,
+        {
+          department,
+          designation,
+        }
+      );
+
+      await fetchEmployee();
+setSaved(true);
+
+setTimeout(() => {
+  setSaved(false);
+}, 3000);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setSaving(false);
+    }
+  };
 
   if (loading) {
     return (
@@ -154,20 +202,79 @@ const usedLeaves =
     ).toLocaleDateString()}
   </p>
 
-  <p className="text-zinc-400 mt-1">
-    Department:{" "}
-    {employee.department || "N/A"}
-  </p>
+  <div className="mt-3">
+  <label className="block text-sm text-zinc-500 mb-1">
+    Department
+  </label>
 
-  <p className="text-zinc-400 mt-1">
-    Designation:{" "}
-    {employee.designation || "N/A"}
-  </p>
+  <input
+    value={department}
+    onChange={(e) =>
+      setDepartment(
+        e.target.value
+      )
+    }
+    className="
+      w-full
+      bg-white/5
+      border border-white/10
+      rounded-xl
+      px-4 py-2
+      text-white
+    "
+  />
+</div>
 
-  <p className="text-zinc-400 mt-1">
-    Phone:{" "}
-    {employee.phone || "Not Added"}
+<div className="mt-3">
+  <label className="block text-sm text-zinc-500 mb-1">
+    Designation
+  </label>
+
+  <input
+    value={designation}
+    onChange={(e) =>
+      setDesignation(
+        e.target.value
+      )
+    }
+    className="
+      w-full
+      bg-white/5
+      border border-white/10
+      rounded-xl
+      px-4 py-2
+      text-white
+    "
+  />
+</div>
+
+<button
+  onClick={updateJobDetails}
+  disabled={saving}
+  className="
+    mt-4
+    px-5 py-3
+    rounded-2xl
+    border border-blue-500/30
+    bg-blue-500/10
+    text-blue-400
+    hover:bg-blue-500/20
+    transition-all
+    duration-300
+    disabled:opacity-50
+  "
+>
+  {saving
+    ? "Saving Changes..."
+    : "Save Changes"}
+</button>
+
+
+{saved && (
+  <p className="mt-3 text-green-400 text-sm">
+    ✓ Employee details updated successfully
   </p>
+)}
 
   <p className="text-zinc-400 mt-1">
   Leave Balance:{" "}

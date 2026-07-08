@@ -180,9 +180,57 @@ const getEmployeeById = async (
   }
 };
 
+const updateEmployeeJobDetails = async (
+  req,
+  res
+) => {
+  try {
+    const {
+      department,
+      designation,
+    } = req.body;
+
+    const employee =
+      await User.findById(
+        req.params.id
+      );
+
+    if (!employee) {
+      return res.status(404).json({
+        success: false,
+        message: "Employee not found",
+      });
+    }
+
+    employee.department =
+      department?.trim() || "";
+
+    employee.designation =
+      designation?.trim() || "";
+
+    await employee.save();
+
+    return res.status(200).json({
+      success: true,
+      message:
+        "Employee details updated successfully",
+      data: employee,
+    });
+  } catch (error) {
+    console.error(error);
+
+    return res.status(500).json({
+      success: false,
+      message:
+        "Internal Server Error",
+    });
+  }
+};
+
 module.exports = {
   getEmployees,
   createEmployee,
   deleteEmployee,
-    getEmployeeById,
+  getEmployeeById,
+  updateEmployeeJobDetails,
 };

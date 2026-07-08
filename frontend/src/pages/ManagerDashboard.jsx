@@ -62,6 +62,9 @@ const [managerRemarks, setManagerRemarks] =
 const [showRemarksModal, setShowRemarksModal] =
   useState(false);
 
+  const [selectedImage, setSelectedImage] =
+  useState(null);
+
   const fetchLeaves = async () => {
     try {
       const response = await api.get(
@@ -272,21 +275,34 @@ const [showRemarksModal, setShowRemarksModal] =
                             "
                           >
                             <img
-                              src={
-                                leave.employee?.profileImage
-                                  ? `http://localhost:5000/${leave.employee.profileImage}`
-                                  : `https://ui-avatars.com/api/?name=${encodeURIComponent(
-                                      leave.employee?.name || "Employee"
-                                    )}`
-                              }
-                              alt={leave.employee?.name}
-                              className="
-                                w-10 h-10
-                                rounded-full
-                                object-cover
-                                border border-white/10
-                              "
-                            />
+  src={
+    leave.employee?.profileImage
+      ? `http://localhost:5000/${leave.employee.profileImage}`
+      : `https://ui-avatars.com/api/?name=${encodeURIComponent(
+          leave.employee?.name || "Employee"
+        )}`
+  }
+  alt={leave.employee?.name}
+  onClick={(e) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    setSelectedImage(
+      leave.employee?.profileImage
+        ? `http://localhost:5000/${leave.employee.profileImage}`
+        : `https://ui-avatars.com/api/?name=${encodeURIComponent(
+            leave.employee?.name || "Employee"
+          )}`
+    );
+  }}
+  className="
+    w-10 h-10
+    rounded-full
+    object-cover
+    border border-white/10
+    cursor-pointer
+  "
+/>
 
                             <span className="font-medium text-zinc-200">
                               {leave.employee?.name}
@@ -521,6 +537,29 @@ const [showRemarksModal, setShowRemarksModal] =
           
       </div>
     </div>
+  </div>
+)}
+
+{selectedImage && (
+  <div
+    className="
+      fixed inset-0
+      bg-black/80
+      backdrop-blur-sm
+      flex items-center justify-center
+      z-[9999]
+    "
+    onClick={() => setSelectedImage(null)}
+  >
+    <img
+      src={selectedImage}
+      alt="Employee"
+      className="
+        max-w-[90vw]
+        max-h-[90vh]
+        rounded-3xl
+      "
+    />
   </div>
 )}
 

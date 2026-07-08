@@ -155,11 +155,11 @@ const Profile = () => {
 
   const [showImageModal, setShowImageModal] = useState(false);
 
-  const [editing, setEditing] =
-    useState(false);
-
   const [loading, setLoading] =
     useState(false);
+
+    const [selectedImage, setSelectedImage] =
+  useState(null);
 
   const [uploading, setUploading] =
     useState(false);
@@ -488,187 +488,39 @@ const Profile = () => {
 
             <div className="h-px w-full bg-white/[0.08] my-10" />
 
-            {!editing ? (
-              <>
-                <div className="grid md:grid-cols-2 gap-5">
-                  <InfoCard
-                    icon={
-                      <User size={16} />
-                    }
-                    label="Full Name"
-                    value={
-                      profile.name
-                    }
-                  />
+            <>
+  <div className="grid md:grid-cols-2 gap-5">
+    <InfoCard
+      icon={<User size={16} />}
+      label="Full Name"
+      value={profile.name}
+    />
 
-                  <InfoCard
-                    icon={
-                      <Mail size={16} />
-                    }
-                    label="Email Address"
-                    value={
-                      profile.email
-                    }
-                  />
+    <InfoCard
+      icon={<Mail size={16} />}
+      label="Email Address"
+      value={profile.email}
+    />
 
-                  <InfoCard
-                    icon={
-                      <Shield size={16} />
-                    }
-                    label="Role"
-                    value={
-                      profile.role
-                    }
-                  />
+    <InfoCard
+      icon={<Shield size={16} />}
+      label="Role"
+      value={profile.role}
+    />
 
-                  <InfoCard
-                    icon={
-                      <Building2 size={16} />
-                    }
-                    label="Department"
-                    value={
-                      profile.department
-                    }
-                  />
+    <InfoCard
+      icon={<Building2 size={16} />}
+      label="Department"
+      value={profile.department}
+    />
 
-                  <InfoCard
-                    icon={
-                      <Briefcase size={16} />
-                    }
-                    label="Designation"
-                    value={
-                      profile.designation
-                    }
-                  />
-                </div>
-
-                <div className="flex justify-end mt-10">
-                  <button
-                    onClick={() =>
-                      setEditing(true)
-                    }
-                    className="
-                      inline-flex
-                      items-center
-                      gap-2
-                      justify-center
-                      px-6 py-3
-                      rounded-xl
-                      bg-white/[0.05]
-                      border border-white/[0.1]
-                      hover:bg-white/[0.08]
-                      text-white
-                      font-medium
-                      transition-all
-                      shadow-[0_0_20px_rgba(37,99,235,0.3)]
-                    "
-                  >
-                    <Edit3 size={16} />
-                    Edit Profile
-                  </button>
-                </div>
-              </>
-            ) : (
-              <>
-                <div className="grid md:grid-cols-2 gap-5">
-                  <InputField
-                    label="Full Name"
-                    value={
-                      formData.name
-                    }
-                    onChange={(e) =>
-                      setFormData({
-                        ...formData,
-                        name:
-                          e.target
-                            .value,
-                      })
-                    }
-                  />
-
-                  <InputField
-                    label="Email"
-                    value={
-                      profile.email
-                    }
-                    disabled
-                  />
-
-                  <InputField
-                    label="Department"
-                    value={
-                      formData.department
-                    }
-                    onChange={(e) =>
-                      setFormData({
-                        ...formData,
-                        department:
-                          e.target
-                            .value,
-                      })
-                    }
-                  />
-
-                  <InputField
-                    label="Designation"
-                    value={
-                      formData.designation
-                    }
-                    onChange={(e) =>
-                      setFormData({
-                        ...formData,
-                        designation:
-                          e.target
-                            .value,
-                      })
-                    }
-                  />
-                </div>
-
-                <div className="flex justify-end gap-3 mt-10">
-                  <button
-                    onClick={
-                      handleCancel
-                    }
-                    className="
-                      px-6 py-3
-                      rounded-xl
-                      border border-white/[0.1]
-                      bg-white/[0.03]
-                    "
-                  >
-                    <div className="flex items-center gap-2">
-                      <X size={16} />
-                      Cancel
-                    </div>
-                  </button>
-
-                  <button
-                    disabled={
-                      loading
-                    }
-                    onClick={
-                      handleSaveProfile
-                    }
-                    className="
-                      px-6 py-3
-                      rounded-xl
-                      bg-white/[0.05]
-                      border border-white/[0.1]
-                      hover:bg-white/[0.08]
-                      shadow-[0_0_20px_rgba(37,99,235,0.3)]
-                    "
-                  >
-                    <div className="flex items-center gap-2">
-                      <Save size={16} />
-                      {loading
-                        ? "Saving..."
-                        : "Save Changes"}
-                    </div>
-                  </button>
-                </div>
-              </>
-            )}
+    <InfoCard
+      icon={<Briefcase size={16} />}
+      label="Designation"
+      value={profile.designation}
+    />
+  </div>
+</>
 
             <div className="h-px w-full bg-white/[0.08] my-10" />
 
