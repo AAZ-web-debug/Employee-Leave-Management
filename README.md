@@ -1,66 +1,124 @@
 # Employee Leave Management System
 
-A full-stack Employee Leave Management System built using the MERN stack. The application allows employees to apply for leave, track leave status, manage profiles, and enables managers to review, approve, or reject leave requests through a dedicated dashboard.
+A full-stack Employee Leave Management System built using the MERN stack. The application enables employees to apply for leave, manage profiles, track leave balances, and monitor leave requests, while managers can review requests, manage employees, and monitor workforce availability through a dedicated dashboard.
 
 ---
 
 ## Features
 
 ### Authentication & Authorization
-- Secure JWT-based authentication
+
+- JWT-based authentication
+- Secure password hashing using bcrypt
 - Role-based access control
 - Employee and Manager roles
-- Protected routes
-- Password hashing using bcrypt
+- Protected frontend and backend routes
+- Persistent login sessions
 
-### Employee Features
-- Login securely
-- View personal dashboard
-- Apply for leave
-- Upload supporting documents
-- View leave history
-- Track leave status
-- Cancel pending leave requests
-- Manage profile information
+---
+
+## Employee Features
+
+### Profile Management
+
+- View personal profile
+- Update profile information
 - Upload profile picture
-
-### Manager Features
-- Manager dashboard
-- View all employees
-- Search employees
-- Review leave requests
-- Approve leave requests
-- Reject leave requests
-- Add review remarks
-- View employee details
-- Track leave statistics
+- Change password
 
 ### Leave Management
-- Leave overlap detection
+
+- Apply for leave requests
+- Select leave type
+- Add leave reason
+- Upload supporting documents
 - Automatic leave duration calculation
-- Leave status tracking
-- Leave balance tracking
-- Approval workflow
+- Leave balance validation
+- View leave history
+- Track leave request status
+- View manager remarks
+
+### Dashboard
+
+- Personal leave statistics
+- Available leave balance
+- Leave request summary
+
+---
+
+## Manager Features
+
+### Employee Management
+
+- View all employees
+- Search employees by:
+  - Name
+  - Email
+  - Employee ID
+- View detailed employee profiles
+- Update employee department
+- Update employee designation
+
+### Leave Approval Workflow
+
+- Review leave requests
+- View leave reasons
+- View leave attachments
+- Approve requests
+- Reject requests
+- Add manager remarks
+- Track request status
+
+### Workforce Availability (Manpower Module)
+
+- View workforce availability for any date
+- Quick access to:
+  - Yesterday
+  - Today
+  - Tomorrow
+- Custom date selection
+- View:
+  - Total Employees
+  - Employees On Duty
+  - Employees On Leave
+- Direct navigation to employee details
+- Real-time workforce availability tracking
 
 ### Dashboard & Analytics
+
 - Employee count
+- Approved leave count
+- Rejected leave count
+- Pending leave count
 - Leave request statistics
-- Approved requests count
-- Rejected requests count
-- Pending requests count
+
+---
+
+## Leave Management Features
+
+- Leave overlap detection
+- Automatic leave balance deduction
+- Leave balance validation
+- Leave duration calculation
+- Leave approval workflow
+- Leave status tracking
+- Leave attachment support
 
 ---
 
 ## Tech Stack
 
 ### Frontend
+
 - React.js
 - Vite
 - Tailwind CSS
 - React Router DOM
 - Axios
+- Lucide React
 
 ### Backend
+
 - Node.js
 - Express.js
 - MongoDB Atlas
@@ -77,15 +135,13 @@ A full-stack Employee Leave Management System built using the MERN stack. The ap
 Employee Leave Management System
 │
 ├── backend
-│   ├── scripts
-│   ├── src
-│   │   ├── config
-│   │   ├── controllers
-│   │   ├── middleware
-│   │   ├── models
-│   │   ├── routes
-│   │   ├── utils
-│   │   └── validators
+│   ├── config
+│   ├── controllers
+│   ├── middleware
+│   ├── models
+│   ├── routes
+│   ├── uploads
+│   ├── utils
 │   └── package.json
 │
 ├── frontend
@@ -94,7 +150,8 @@ Employee Leave Management System
 │   │   ├── components
 │   │   ├── context
 │   │   ├── layout
-│   │   └── pages
+│   │   ├── pages
+│   │   └── routes
 │   └── package.json
 │
 └── README.md
@@ -106,16 +163,16 @@ Employee Leave Management System
 
 Before running the project, ensure you have:
 
-- Node.js (v18 or above recommended)
+- Node.js (v18 or above)
 - npm
-- MongoDB Atlas account
+- MongoDB Atlas Account
 - Git
 
 ---
 
 ## Installation
 
-### 1. Clone Repository
+### Clone Repository
 
 ```bash
 git clone https://github.com/YOUR_USERNAME/employee-leave-management-system.git
@@ -127,19 +184,13 @@ cd employee-leave-management-system
 
 ## Backend Setup
 
-Navigate to backend:
-
 ```bash
 cd backend
-```
 
-Install dependencies:
-
-```bash
 npm install
 ```
 
-Create a `.env` file using `.env.example`:
+Create a `.env` file:
 
 ```env
 PORT=5000
@@ -151,13 +202,13 @@ JWT_SECRET=your_secret_key
 JWT_EXPIRES_IN=7d
 ```
 
-Start backend server:
+Start the backend server:
 
 ```bash
 npm run dev
 ```
 
-Backend runs on:
+Backend runs at:
 
 ```text
 http://localhost:5000
@@ -167,25 +218,15 @@ http://localhost:5000
 
 ## Frontend Setup
 
-Open another terminal:
-
 ```bash
 cd frontend
-```
 
-Install dependencies:
-
-```bash
 npm install
-```
 
-Start frontend:
-
-```bash
 npm run dev
 ```
 
-Frontend runs on:
+Frontend runs at:
 
 ```text
 http://localhost:5173
@@ -195,24 +236,12 @@ http://localhost:5173
 
 ## Creating the First Manager Account
 
-This project does not ship with any default accounts.
-
-After configuring MongoDB and installing dependencies, create the first manager account:
+After configuring MongoDB and installing dependencies:
 
 ```bash
 cd backend
 
 npm run create-manager
-```
-
-You will be prompted to enter:
-
-```text
-Name
-Email
-Password
-Department
-Designation
 ```
 
 Example:
@@ -225,37 +254,45 @@ Department: HR
 Designation: Senior Manager
 ```
 
-After creation, log in using the provided credentials.
-
 ---
 
 ## API Modules
 
 ### Authentication
+
 - Register Employee
 - Login
 - JWT Verification
 
 ### Profile
+
 - View Profile
 - Update Profile
 - Upload Profile Picture
+- Change Password
 
 ### Leave
+
 - Apply Leave
 - View Leave History
-- Cancel Leave Request
+- Track Leave Status
+- Upload Leave Attachments
 
 ### Manager
+
 - View Employees
-- Review Requests
+- Search Employees
+- Review Leave Requests
 - Approve Requests
 - Reject Requests
+- Add Remarks
 
 ### Dashboard
+
 - Employee Statistics
 - Leave Statistics
 - Approval Metrics
+- Workforce Availability
 
 ---
 
@@ -272,12 +309,10 @@ After creation, log in using the provided credentials.
   department,
   designation,
   employeeId,
-  phone,
-  manager,
   annualLeaveBalance,
   profileImage,
-  isActive,
-  lastLogin
+  createdAt,
+  updatedAt
 }
 ```
 
@@ -287,15 +322,16 @@ After creation, log in using the provided credentials.
 {
   employee,
   leaveType,
-  startDate,
-  endDate,
+  fromDate,
+  toDate,
   totalDays,
   reason,
   attachment,
   status,
   managerRemarks,
   reviewedBy,
-  reviewedAt
+  reviewedAt,
+  createdAt
 }
 ```
 
@@ -303,59 +339,48 @@ After creation, log in using the provided credentials.
 
 ## Screenshots
 
-Add screenshots here before publishing:
+Add screenshots before publishing:
 
-### Landing Page
-
-![Landing Page](screenshots/landing-page.png)
-
-### Login Page
-
-![Login](screenshots/login-page.png)
-
-### Employee Dashboard
-
-![Employee Dashboard](screenshots/employee-dashboard.png)
-
-### Manager Dashboard
-
-![Manager Dashboard](screenshots/manager-dashboard.png)
-
-### Leave Approval
-
-![Leave Approval](screenshots/leave-approval.png)
-
-### Employee Directory
-
-![Employee Directory](screenshots/employees.png)
+- Login Page
+- Employee Dashboard
+- Apply Leave
+- Leave History
+- Employee Profile
+- Manager Dashboard
+- Leave Approval Panel
+- Employee Directory
+- Employee Details Page
+- Workforce Availability (Manpower Module)
 
 ---
 
-## Security Notes
+## Security Features
 
-- Passwords are hashed using bcrypt.
-- Authentication is handled through JWT tokens.
-- Environment variables are excluded from version control.
-- MongoDB credentials are not stored in the repository.
+- JWT Authentication
+- Password Hashing (bcrypt)
+- Protected API Routes
+- Role-Based Access Control
+- Secure File Upload Handling
+- Environment Variable Protection
 
 ---
 
 ## Future Enhancements
 
-- Email notifications
-- Password reset
-- Leave calendar
-- Team-wise reporting
-- Admin role
-- Export reports as PDF
-- Advanced analytics dashboard
-- Multi-level approval workflow
+- Email Notifications
+- Password Reset
+- Leave Calendar View
+- Public Holiday Management
+- Advanced Leave Analytics Dashboard
+- Export Reports
+- Multi-Level Approval Workflow
+- Admin Role
 
 ---
 
 ## Author
 
-Aditya Anand Zalke
+**Aditya Anand Zalke**
 
 B.Tech Computer Science Engineering
 
