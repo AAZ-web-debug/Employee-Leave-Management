@@ -65,6 +65,12 @@ const [showRemarksModal, setShowRemarksModal] =
   const [selectedImage, setSelectedImage] =
   useState(null);
 
+  const [showReasonModal, setShowReasonModal] =
+  useState(false);
+
+const [selectedReason, setSelectedReason] =
+  useState("");
+
   const fetchLeaves = async () => {
     try {
       const response = await api.get(
@@ -229,6 +235,9 @@ const [showRemarksModal, setShowRemarksModal] =
                       <th className="text-left py-4 px-4 font-medium whitespace-nowrap">
                         Leave Type
                       </th>
+                      <th className="text-left py-4 px-4 font-medium whitespace-nowrap">
+                        Reason
+                      </th>
 
                     <th className="text-left py-4 px-4 font-medium whitespace-nowrap">
                     Duration
@@ -313,6 +322,30 @@ const [showRemarksModal, setShowRemarksModal] =
                           <td className="py-4 px-4 text-zinc-400 capitalize">
                             {leave.leaveType}
                           </td>
+                          <td className="py-4 px-4">
+                          <button
+  onClick={() => {
+    setSelectedReason(
+      leave.reason || "No reason provided"
+    );
+    setShowReasonModal(true);
+  }}
+  className="
+    inline-flex
+    items-center
+    px-3 py-1.5
+    rounded-lg
+    bg-purple-500/10
+    border border-purple-500/20
+    text-purple-400
+    text-xs
+    hover:bg-purple-500/20
+    transition
+  "
+>
+  View Reason
+</button>
+                        </td>
 
                           <td className="py-4 px-4">
                             <div className="flex flex-col gap-1">
@@ -560,6 +593,61 @@ const [showRemarksModal, setShowRemarksModal] =
         rounded-3xl
       "
     />
+  </div>
+)}
+
+{showReasonModal && (
+  <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50">
+    <div
+      className="
+        bg-[#12161d]/95
+        backdrop-blur-xl
+        border border-white/10
+        rounded-3xl
+        p-6
+        w-full
+        max-w-lg
+        shadow-[0_0_60px_rgba(0,0,0,0.5)]
+      "
+    >
+      <h2 className="text-xl font-semibold text-white mb-4">
+        Leave Reason
+      </h2>
+
+      <div
+        className="
+          bg-black/30
+          border border-white/10
+          rounded-xl
+          p-4
+          text-zinc-300
+          whitespace-pre-wrap
+          min-h-[120px]
+        "
+      >
+        {selectedReason}
+      </div>
+
+      <div className="flex justify-end mt-6">
+        <button
+          onClick={() => {
+            setShowReasonModal(false);
+            setSelectedReason("");
+          }}
+          className="
+            px-5 py-2.5
+            rounded-xl
+            border border-white/10
+            bg-white/[0.03]
+            text-zinc-300
+            hover:bg-white/[0.06]
+            transition-all
+          "
+        >
+          Close
+        </button>
+      </div>
+    </div>
   </div>
 )}
 
