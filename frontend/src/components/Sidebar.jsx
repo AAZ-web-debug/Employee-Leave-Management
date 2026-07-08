@@ -3,6 +3,7 @@ import {
   CalendarDays,
   User,
   Users,
+  Briefcase,
   LogOut,
   Menu,
   ChevronLeft,
@@ -125,6 +126,20 @@ const Sidebar = ({
             )}
           </NavLink>
         )}
+
+        {user?.role === "manager" && (
+  <NavLink
+    to="/manpower"
+    className={({ isActive }) =>
+      getNavClass(isActive)
+    }
+  >
+    <Briefcase size={20} />
+    {!collapsed && (
+      <span>Manpower</span>
+    )}
+  </NavLink>
+)}
 
         {user?.role === "employee" && (
           <NavLink

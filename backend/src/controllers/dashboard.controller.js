@@ -123,8 +123,73 @@ const publicStats = async (req, res) => {
   }
 };
 
+const getAvailability = async (req, res) => {
+  try {
+    const date = req.query.date
+      ? new Date(req.query.date)
+      : new Date();
+
+    date.setHours(0, 0, 0, 0);
+
+    const employeesOnLeave =
+  await Leave.find({
+    status: "approved",
+    fromDate: { $lte: date },
+    toDate: { $gte: date },
+  }).populate(
+    "employee",
+    "name employeeId department designation profileImage"
+  );
+
+    const leaveEmployeeIds =
+      employeesOnLeave.map(
+        (leave) =>
+          leave.employee?._id?.toString()
+      );
+
+    const allEmployees =
+      await User.find({
+        role: "employee",
+      }).select(
+        "name employeeId department designation profileImage"
+      );
+
+    const onDutyEmployees =
+      allEmployees.filter(
+        (employee) =>
+          !leaveEmployeeIds.includes(
+            employee._id.toString()
+          )
+      );
+
+    res.status(200).json({
+  success: true,
+  data: {
+    totalEmployees: allEmployees.length,
+    onDutyCount: onDutyEmployees.length,
+    onLeaveCount: employeesOnLeave.length,
+    onDutyEmployees,
+    onLeaveEmployees:
+      employeesOnLeave.map((leave) => ({
+        ...leave.employee.toObject(),
+        leaveType: leave.leaveType,
+      })),
+  },
+});
+  } catch (error) {
+    console.error(error);
+
+    res.status(500).json({
+      success: false,
+      message:
+        "Failed to fetch availability",
+    });
+  }
+};
+
 module.exports = {
   employeeDashboard,
   managerDashboard,
   publicStats,
+  getAvailability,
 };

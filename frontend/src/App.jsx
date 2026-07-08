@@ -18,6 +18,7 @@ import Profile from "./pages/Profile";
 import Employees from "./pages/Employees";
 import EmployeeDetails from "./pages/EmployeeDetails";
 import LandingPage from "./pages/LandingPage";
+import Manpower from "./pages/Manpower";
 
 function App() {
   return (
@@ -86,6 +87,15 @@ function App() {
     </ProtectedRoute>
   }
       />
+
+      <Route
+  path="/manpower"
+  element={
+    <ProtectedRoute>
+      <Manpower />
+    </ProtectedRoute>
+  }
+/>
 
       <Route
   path="/employees/:id"

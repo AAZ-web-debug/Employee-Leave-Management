@@ -4,6 +4,7 @@ const {
   employeeDashboard,
   managerDashboard,
   publicStats,
+  getAvailability,
 } = require("../controllers/dashboard.controller");
 
 const {
@@ -33,6 +34,13 @@ router.get(
   protect,
   authorize("manager"),
   managerDashboard
+);
+
+router.get(
+  "/availability",
+  protect,
+  authorize("manager"),
+  getAvailability
 );
 
 module.exports = router;

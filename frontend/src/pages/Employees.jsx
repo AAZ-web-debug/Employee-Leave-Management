@@ -130,11 +130,13 @@ const fetchEmployees = async () => {
 
 const filteredEmployees =
   employees.filter((employee) =>
-    `${employee.name} ${employee.email}`
+    `
+      ${employee.name}
+      ${employee.email}
+      ${employee.employeeId || ""}
+    `
       .toLowerCase()
-      .includes(
-        searchTerm.toLowerCase()
-      )
+      .includes(searchTerm.toLowerCase())
   );
 
   return (
