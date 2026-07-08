@@ -16,6 +16,9 @@ const EmployeeDetails = () => {
   const [selectedRemark, setSelectedRemark] =
   useState(null);
 
+  const [selectedReason, setSelectedReason] =
+  useState(null);
+
   const [loading, setLoading] =
     useState(true);
 
@@ -401,6 +404,9 @@ const usedLeaves =
                     <th className="text-left py-4">
                       Leave Type
                     </th>
+                    <th className="text-left py-4">
+                      Reason
+                    </th>
 
                     <th className="text-left py-4">
                       From
@@ -436,6 +442,30 @@ const usedLeaves =
                             leave.leaveType
                           }
                         </td>
+
+                        <td className="py-4">
+  <button
+    onClick={() =>
+      setSelectedReason(
+        leave.reason || "No reason provided"
+      )
+    }
+    className="
+      inline-flex
+      items-center
+      px-3 py-1.5
+      rounded-lg
+      bg-purple-500/10
+      border border-purple-500/20
+      text-purple-400
+      text-xs
+      hover:bg-purple-500/20
+      transition
+    "
+  >
+    View Reason
+  </button>
+</td>
 
                         <td className="py-4">
                           {new Date(
@@ -554,6 +584,53 @@ const usedLeaves =
         <button
           onClick={() =>
             setSelectedRemark(null)
+          }
+          className="
+            px-4 py-2
+            rounded-xl
+            border border-white/10
+          "
+        >
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+)}
+
+{selectedReason && (
+  <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50">
+    <div
+      className="
+        bg-[#12161d]
+        border border-white/10
+        rounded-3xl
+        p-6
+        w-full
+        max-w-2xl
+      "
+    >
+      <h2 className="text-xl font-semibold text-white mb-4">
+        Leave Reason
+      </h2>
+
+      <div
+        className="
+          rounded-xl
+          bg-white/5
+          border border-white/10
+          p-4
+          text-zinc-300
+          whitespace-pre-wrap
+        "
+      >
+        {selectedReason}
+      </div>
+
+      <div className="flex justify-end mt-6">
+        <button
+          onClick={() =>
+            setSelectedReason(null)
           }
           className="
             px-4 py-2
